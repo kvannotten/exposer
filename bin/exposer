@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require 'exposer'
+require 'net/ssh'
+
+#fork(`ssh -fqNR jandugame.com:8080:localhost:9393 root@jandugame.com`)
+
+Net::SSH.start("jandugame.com", "root") do |ssh|
+  ssh.forward.remote(9393, "localhost", 8080, "0.0.0.0")
+  ssh.loop { true }
+end

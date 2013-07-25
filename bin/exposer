@@ -1,11 +1,29 @@
 #!/usr/bin/env ruby
 
 require 'exposer'
-require 'net/ssh'
+require 'optparse'
 
-#fork(`ssh -fqNR jandugame.com:8080:localhost:9393 root@jandugame.com`)
+trap("SIGINT") { puts "\nExiting...\n"; exit! }
 
-Net::SSH.start("jandugame.com", "root") do |ssh|
-  ssh.forward.remote(9393, "localhost", 8080, "0.0.0.0")
-  ssh.loop { true }
+port = 0
+
+options = OptionParser.new do |o|
+  o.banner = "Usage: exposer -p <port>\n\n"
+  
+  o.on("-p", "--port PORT", "expose a port to the internet") do |p|
+    port = p.to_i
+  end
+  
+  o.on('-h', "--help", "show this help") { puts o; exit }
 end
+
+args = options.parse!
+unless port.between?(1, 65535)
+  puts options
+  exit
+end
+
+#fork(`ssh -fqNR expose.exposer.io:8080:localhost:9393 exposer@expose.exposer.io`)
+
+Exposer.prepare
+Exposer.start({ :port => port.to_i })

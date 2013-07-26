@@ -1,4 +1,4 @@
-# Exposer
+# Exposer [![Build Status](https://travis-ci.org/kvannotten/exposer.png?branch=master)](https://travis-ci.org/kvannotten/exposer)
 
 Exposer exposes your services to the internet via a combination of smart ssh remote port forwarding and reverse nginx proxying. 
 

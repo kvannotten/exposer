@@ -9,10 +9,7 @@ module Exposer
   def self.prepare
     Exposer.make_sure_has_key
     
-    url = URI.parse("http://www.exposer.io/host")
-    @response = JSON.parse(Net::HTTP.get(url))
-    
-    raise "An exception occurred: #{@response.error}" if @response.member? 'error'
+    Exposer.get_host_details
   end
   
   def self.start options = {}
@@ -49,6 +46,13 @@ module Exposer
         File.open(File.expand_path("~/.exposer"), "w") { |f| f.write "1" } 
       end
     end
+  end
+  
+  def self.get_host_details
+    url = URI.parse("http://www.exposer.io/host")
+    @response = JSON.parse(Net::HTTP.get(url))
+    
+    raise "An exception occurred: #{@response.error}" if @response.member? 'error'
   end
   
   def self.response

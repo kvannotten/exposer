@@ -6,7 +6,7 @@ describe Exposer do
   end
   
   before :all do
-    Exposer.prepare
+    Exposer.get_host_details
     @response = Exposer.response
   end
   
@@ -20,7 +20,7 @@ describe Exposer do
   end
   
   it "raises no error" do
-    expect { Exposer.prepare }.to_not raise_error 
+    expect { Exposer.get_host_details }.to_not raise_error 
   end
 
 end

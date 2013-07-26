@@ -1,8 +1,26 @@
 require 'spec_helper'
 
 describe Exposer do
-  it 'should have a version number' do
-    Expose::VERSION.should_not be_nil
+  it 'has a version number' do
+    Exposer::VERSION.should_not be_nil
+  end
+  
+  before :all do
+    Exposer.prepare
+    @response = Exposer.response
+  end
+  
+  subject { @response }
+  
+  it { should have_key "host" }
+  it { should have_key "port" }
+  
+  it "returns valid json" do
+    expect { JSON.parse Exposer.response.to_json }.to_not raise_error
+  end
+  
+  it "raises no error" do
+    expect { Exposer.prepare }.to_not raise_error 
   end
 
 end

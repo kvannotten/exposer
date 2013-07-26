@@ -51,4 +51,8 @@ module Exposer
     end
   end
   
+  def self.response
+    @response
+  end
+  
 end

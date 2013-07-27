@@ -6,22 +6,30 @@ require 'optparse'
 trap("SIGINT") { puts "\nExiting...\n"; exit! }
 
 port = 0
+sub_domain_length = 4
 
 options = OptionParser.new do |o|
-  o.banner = "Usage: exposer -p <port>\n\n"
+  o.banner = "Usage: exposer -p <port>\n\n" +
+              "You can choose the length of the subdomain" +
+              "by using the -l <length> flag. This is limited to between 4 and 10 charachters"
   
   o.on("-p", "--port PORT", "expose a port to the internet") do |p|
     port = p.to_i
+  end
+  
+  o.on("-l", "--length LENGTH", "give the length of the subdomain") do |l|
+    sub_domain_length = l.to_i  
   end
   
   o.on('-h', "--help", "show this help") { puts o; exit }
 end
 
 args = options.parse!
-unless port.between?(1, 65535)
+unless port.between?(1, 65535) and sub_domain_length.between(4, 10)
   puts options
   exit
 end
+
 
 #fork(`ssh -fqNR expose.exposer.io:8080:localhost:9393 exposer@expose.exposer.io`)
 

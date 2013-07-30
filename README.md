@@ -35,6 +35,12 @@ Press CTRL+C to stop the connection.
 You can then just share the link that is given to you in the response. And via that link people can reach
 the application that you just have set up! It's almost magic!
 
+## TODO
+
+* Add option to define the length of the subdomain (longer if you want more privacy, shorter if you want it to be easy to remember)
+* Add posibility to choose which public key file to use to authenticate with the server
+* ...
+
 ## Contributing
 
 1. Fork it
